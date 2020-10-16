@@ -5,5 +5,4 @@ GameDevelopment/bin
 GameDevelopment/obj
 
 # Ignore other IDE-related content.
-GameDevelopment/Content
 GameDevelopment/app.manifest
