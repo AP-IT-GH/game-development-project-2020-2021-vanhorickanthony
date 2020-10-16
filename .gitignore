@@ -1,0 +1,9 @@
+# Ignore visual studio configuration files
+.vs
+# Ignore build & binary files.
+GameDevelopment/bin
+GameDevelopment/obj
+
+# Ignore other IDE-related content.
+GameDevelopment/Content
+GameDevelopment/app.manifest
