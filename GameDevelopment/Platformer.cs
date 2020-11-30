@@ -32,6 +32,9 @@ namespace TestGame
         private TiledMap map;
         private TiledMapRenderer mapRenderer;
 
+        TiledMapTileLayer groundLayer, lavaLayer;
+        TiledMapTile? collisionTile;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -85,6 +88,8 @@ namespace TestGame
         {          
             hero = new Hero(this.spawnPoint, this.idleTexture, this.walkTexture, this.runTexture, new KeyBoardReader());
 
+            groundLayer = this.map.GetLayer<TiledMapTileLayer>("GroundLayer");
+            collisionTile = null;
         }
 
         protected override void Update(GameTime gameTime)
@@ -99,8 +104,10 @@ namespace TestGame
 
             mapRenderer.Update(gameTime);
 
-            
-
+            if (groundLayer != null)
+            {
+                groundLayer.TryGetTile((ushort)(hero.Position.X / 32), (ushort)(hero.Position.Y / 32), out collisionTile);
+            }
 
             base.Update(gameTime);
         }
@@ -116,6 +123,13 @@ namespace TestGame
             _spriteBatch.Begin();
 
             hero.Draw(_spriteBatch);
+
+            if (!collisionTile.Value.IsBlank)
+            {
+                Debug.WriteLine("[" + gameTime.TotalGameTime + "] Collision detected.");
+                Debug.WriteLine(collisionTile.ToString());
+                hero.Undo();
+            }
 
             _spriteBatch.End();
 

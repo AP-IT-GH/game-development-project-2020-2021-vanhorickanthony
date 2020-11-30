@@ -24,10 +24,9 @@ namespace TestGame.Commands
             snelheid += direction;
             snelheid = Limit(snelheid, 6);
             transform.Position += snelheid;
-
         }
 
-        public void Undo()
+        public void Undo(ITransform transform)
         {
             throw new NotImplementedException();
         }

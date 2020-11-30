@@ -109,9 +109,12 @@ namespace TestGame
             }
 
             moveCommand.Execute(this, _direction);
-        }    
+        }
 
-       
+        public void Undo()
+        {
+            this.moveCommand.Undo(this);
+        }
 
         private void Move(Vector2 mouse) 
         {

@@ -116,3 +116,8 @@
 /processor:TiledMapProcessor
 /build:map/GameMap.tmx
 
+#begin map/Level_1.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:map/Level_1.tmx
+

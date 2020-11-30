@@ -1,0 +1,12 @@
+digraph "TestGame.Animation.Animatie.Update"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="RL";
+  Node1 [label="TestGame.Animation.Animatie.\lUpdate",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="TestGame.Animation.HeroAnimations.\lWalkLeftAnimation.Update",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d0/de1/class_test_game_1_1_animation_1_1_hero_animations_1_1_walk_left_animation.html#add2c3d969ea2789c903cfbfc4fdff439",tooltip=" "];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="TestGame.Animation.HeroAnimations.\lWalkRightAnimation.Update",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$d4/dfb/class_test_game_1_1_animation_1_1_hero_animations_1_1_walk_right_animation.html#a7b978c16f91d82d8d11666908468c37e",tooltip=" "];
+}

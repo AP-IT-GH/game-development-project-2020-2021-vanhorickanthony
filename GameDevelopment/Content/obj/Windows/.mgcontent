@@ -4,17 +4,19 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/vanho/source/repos/GameDev-Animations-master/TestGame/Content/assets/player/Player_climb.png</File>
-    <File>C:/Users/vanho/source/repos/GameDev-Animations-master/TestGame/Content/assets/player/Player_Idle.png</File>
-    <File>C:/Users/vanho/source/repos/GameDev-Animations-master/TestGame/Content/assets/player/Player_jump.png</File>
-    <File>C:/Users/vanho/source/repos/GameDev-Animations-master/TestGame/Content/assets/player/Player_NoAnimation.png</File>
-    <File>C:/Users/vanho/source/repos/GameDev-Animations-master/TestGame/Content/assets/player/Player_run.png</File>
-    <File>C:/Users/vanho/source/repos/GameDev-Animations-master/TestGame/Content/assets/player/Player_walk.png</File>
-    <File>C:/Users/vanho/source/repos/GameDev-Animations-master/TestGame/Content/assets/tiles/Background.png</File>
-    <File>C:/Users/vanho/source/repos/GameDev-Animations-master/TestGame/Content/assets/tiles/Tileset.png</File>
-    <File>C:/Users/vanho/source/repos/GameDev-Animations-master/TestGame/Content/map/GameMap.tmx</File>
+    <File>C:/Users/vanho/source/repos/GameDevelopment/GameDevelopment/Content/assets/player/Player_climb.png</File>
+    <File>C:/Users/vanho/source/repos/GameDevelopment/GameDevelopment/Content/assets/player/Player_Idle.png</File>
+    <File>C:/Users/vanho/source/repos/GameDevelopment/GameDevelopment/Content/assets/player/Player_jump.png</File>
+    <File>C:/Users/vanho/source/repos/GameDevelopment/GameDevelopment/Content/assets/player/Player_NoAnimation.png</File>
+    <File>C:/Users/vanho/source/repos/GameDevelopment/GameDevelopment/Content/assets/player/Player_run.png</File>
+    <File>C:/Users/vanho/source/repos/GameDevelopment/GameDevelopment/Content/assets/player/Player_walk.png</File>
+    <File>C:/Users/vanho/source/repos/GameDevelopment/GameDevelopment/Content/assets/tiles/Background.png</File>
+    <File>C:/Users/vanho/source/repos/GameDevelopment/GameDevelopment/Content/assets/tiles/Tileset.png</File>
+    <File>C:/Users/vanho/source/repos/GameDevelopment/GameDevelopment/Content/map/GameMap.tmx</File>
+    <File>C:/Users/vanho/source/repos/GameDevelopment/GameDevelopment/Content/map/Level_1.tmx</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

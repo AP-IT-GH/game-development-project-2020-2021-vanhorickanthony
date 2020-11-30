@@ -47,17 +47,14 @@ namespace TestGame.Input
                     direction.X = 1;
                 }
             }
-            else if (state.IsKeyDown(Keys.Down))
+            
+            if (state.IsKeyDown(Keys.Down))
             {
                 direction.Y = 1;
             }
             else if (state.IsKeyDown(Keys.Up))
             {
                 direction.Y = -1;
-            }
-            else
-            {
-                direction = new Vector2(0, 0);
             }
 
             return direction;

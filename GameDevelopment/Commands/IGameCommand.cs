@@ -10,6 +10,6 @@ namespace TestGame.Commands
     {
         void Execute(ITransform transform, Vector2 direction);
 
-        void Undo();
+        void Undo(ITransform transform);
     }
 }

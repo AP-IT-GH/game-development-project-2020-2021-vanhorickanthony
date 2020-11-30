@@ -1,0 +1,11 @@
+digraph "TestGame.Hero"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="TestGame.Hero",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="ITransform",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$db/dfa/interface_test_game_1_1_interfaces_1_1_i_transform.html",tooltip=" "];
+  Node3 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="ICollision",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$df/de9/interface_test_game_1_1_interfaces_1_1_i_collision.html",tooltip=" "];
+}

@@ -1,0 +1,26 @@
+digraph "TestGame.Animation.HeroAnimations.WalkRightAnimation"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="TestGame.Animation.HeroAnimations.\lWalkRightAnimation",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip=" "];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="IEntityAnimation",height=0.2,width=0.4,color="black",URL="$d0/da2/interface_test_game_1_1_animation_1_1_i_entity_animation.html",tooltip=" "];
+  Node3 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" _animatie" ,fontname="Helvetica"];
+  Node3 [label="TestGame.Animation.Animatie",height=0.2,width=0.4,color="black",URL="$df/d72/class_test_game_1_1_animation_1_1_animatie.html",tooltip=" "];
+  Node4 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" hero" ,fontname="Helvetica"];
+  Node4 [label="TestGame.Hero",height=0.2,width=0.4,color="black",URL="$d4/df7/class_test_game_1_1_hero.html",tooltip=" "];
+  Node5 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="ITransform",height=0.2,width=0.4,color="black",URL="$db/dfa/interface_test_game_1_1_interfaces_1_1_i_transform.html",tooltip=" "];
+  Node6 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="ICollision",height=0.2,width=0.4,color="black",URL="$df/de9/interface_test_game_1_1_interfaces_1_1_i_collision.html",tooltip=" "];
+  Node7 -> Node4 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" currentAnimation\nwalkLeft\nwalkRight" ,fontname="Helvetica"];
+  Node7 [label="TestGame.Animation.IEntity\lAnimation",height=0.2,width=0.4,color="black",URL="$d0/da2/interface_test_game_1_1_animation_1_1_i_entity_animation.html",tooltip=" "];
+  Node8 -> Node4 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" inputReader\nmouseReader" ,fontname="Helvetica"];
+  Node8 [label="TestGame.Input.IInputReader",height=0.2,width=0.4,color="black",URL="$d7/ddf/interface_test_game_1_1_input_1_1_i_input_reader.html",tooltip=" "];
+  Node3 -> Node4 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" animatie" ,fontname="Helvetica"];
+  Node9 -> Node4 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" moveCommand\nmoveToCommand" ,fontname="Helvetica"];
+  Node9 [label="TestGame.Commands.IGameCommand",height=0.2,width=0.4,color="black",URL="$d0/dd4/interface_test_game_1_1_commands_1_1_i_game_command.html",tooltip=" "];
+}
