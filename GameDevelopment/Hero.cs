@@ -64,8 +64,7 @@ namespace TestGame
             moveCommand = new MoveCommand();
             moveToCommand = new MoveToCommando();
 
-            _collisionRectangle = new Rectangle((int)Position.X, (int)Position.Y, 280, 385);
-
+            _collisionRectangle = new Rectangle((int)Position.X + 8, (int)Position.Y, 16, 40);
         }
 
         public void Update(GameTime gameTime)
@@ -83,7 +82,9 @@ namespace TestGame
             //animatie.Update(gameTime);
             currentAnimation.Update(gameTime, heroDirection);
 
-            _collisionRectangle.X = (int)Position.X;
+            _collisionRectangle.X = (int)Position.X + 8;
+            _collisionRectangle.Y = (int)Position.Y;
+
             CollisionRectangle = _collisionRectangle;
 
 
@@ -127,6 +128,7 @@ namespace TestGame
         public void Draw(SpriteBatch spriteBatch)
         {
             currentAnimation.Draw(spriteBatch);
+            
         }
     }
 }

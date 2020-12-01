@@ -22,6 +22,8 @@ namespace TestGame
         private Texture2D jumpTexture;
         private Texture2D climbTexture;
 
+        private Texture2D collisionBox;
+
         Hero hero;
 
         CollisionManager collisionManager;
@@ -56,7 +58,7 @@ namespace TestGame
              */
             collisionManager = new CollisionManager();
 
-            spawnPoint = new Vector2(20, 372);
+            spawnPoint = new Vector2(20, 340);
                 
             base.Initialize();
         }
@@ -80,6 +82,9 @@ namespace TestGame
             map = Content.Load<TiledMap>("map/GameMap");
             mapRenderer.LoadMap(map);
 
+            this.collisionBox = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+            this.collisionBox.SetData(new[] { Color.White });
+
             InitializeGameObjects();
             // TODO: use this.Content to load your game content here
         }
@@ -88,8 +93,7 @@ namespace TestGame
         {          
             hero = new Hero(this.spawnPoint, this.idleTexture, this.walkTexture, this.runTexture, new KeyBoardReader());
 
-            groundLayer = this.map.GetLayer<TiledMapTileLayer>("GroundLayer");
-            collisionTile = null;
+            groundLayer = this.map.GetLayer<TiledMapTileLayer>("GroundLayer_1");
         }
 
         protected override void Update(GameTime gameTime)
@@ -103,11 +107,6 @@ namespace TestGame
             hero.Update(gameTime);
 
             mapRenderer.Update(gameTime);
-
-            if (groundLayer != null)
-            {
-                groundLayer.TryGetTile((ushort)(hero.Position.X / 32), (ushort)(hero.Position.Y / 32), out collisionTile);
-            }
 
             base.Update(gameTime);
         }
@@ -124,16 +123,40 @@ namespace TestGame
 
             hero.Draw(_spriteBatch);
 
-            if (!collisionTile.Value.IsBlank)
+            if (collisionManager.CheckCollision(hero.CollisionRectangle, groundLayer))
             {
                 Debug.WriteLine("[" + gameTime.TotalGameTime + "] Collision detected.");
-                Debug.WriteLine(collisionTile.ToString());
+
                 hero.Undo();
             }
+
+            Rectangle collisionRect = hero.CollisionRectangle;
+
+            DrawBorder(collisionRect, 1, Color.Red);
 
             _spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        private void DrawBorder(Rectangle rectangleToDraw, int thicknessOfBorder, Color borderColor)
+        {
+            // Draw top line
+            _spriteBatch.Draw(collisionBox, new Rectangle(rectangleToDraw.X, rectangleToDraw.Y, rectangleToDraw.Width, thicknessOfBorder), borderColor);
+
+            // Draw left line
+            _spriteBatch.Draw(collisionBox, new Rectangle(rectangleToDraw.X, rectangleToDraw.Y, thicknessOfBorder, rectangleToDraw.Height), borderColor);
+
+            // Draw right line
+            _spriteBatch.Draw(collisionBox, new Rectangle((rectangleToDraw.X + rectangleToDraw.Width - thicknessOfBorder),
+                                            rectangleToDraw.Y,
+                                            thicknessOfBorder,
+                                            rectangleToDraw.Height), borderColor);
+            // Draw bottom line
+            _spriteBatch.Draw(collisionBox, new Rectangle(rectangleToDraw.X,
+                                            rectangleToDraw.Y + rectangleToDraw.Height - thicknessOfBorder,
+                                            rectangleToDraw.Width,
+                                            thicknessOfBorder), borderColor);
         }
     }
 }
