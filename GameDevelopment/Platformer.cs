@@ -1,64 +1,71 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Diagnostics;
+
+using GameDevelopment.Animation;
+using GameDevelopment.Animation.Interfaces;
+using GameDevelopment.Collision;
+using GameDevelopment.Core;
+using GameDevelopment.Input;
+using GameDevelopment.Entity;
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Diagnostics;
+
 using MonoGame.Extended.Tiled;
 using MonoGame.Extended.Tiled.Renderers;
-using TestGame.Collision;
-using TestGame.Input;
-namespace TestGame
+
+namespace GameDevelopment
 {
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private Vector2 spawnPoint;
+        private Camera2D _camera2D;
 
-        private Texture2D idleTexture;
-        private Texture2D walkTexture;
-        private Texture2D runTexture;
-        private Texture2D jumpTexture;
-        private Texture2D climbTexture;
+        private Vector2 _spawnPoint;
 
-        private Texture2D collisionBox;
+        private IAnimationSheet _heroIdleSheet, _heroWalkSheet, _heroRunSheet, _heroJumpSheet;
 
-        Hero hero;
+        private Texture2D _collisionBox;
 
-        CollisionManager collisionManager;
+        Hero _hero;
+
+        CollisionManager _collisionManager;
 
         /**
          * Tiled map data
          */
-        private TiledMap map;
-        private TiledMapRenderer mapRenderer;
+        private TiledMap _map;
+        private TiledMapRenderer _mapRenderer;
 
-        TiledMapTileLayer groundLayer, lavaLayer;
-        TiledMapTile? collisionTile;
+        TiledMapTileLayer _groundLayer, _lavaLayer;
 
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-
-          
         }
 
         protected override void Initialize()
         {
-            /**
+            /*
              * Initialize map renderer.
              */
-            mapRenderer = new TiledMapRenderer(GraphicsDevice);
+            _mapRenderer = new TiledMapRenderer(GraphicsDevice);
 
-            /**
+            /*
+             * Initialize camera.
+             */
+            _camera2D = new Camera2D(_graphics.GraphicsDevice.Viewport);
+
+            /*
              * Initialize collision manager.
              */
-            collisionManager = new CollisionManager();
+            _collisionManager = new CollisionManager();
 
-            spawnPoint = new Vector2(20, 340);
+            _spawnPoint = new Vector2(0, 376);
                 
             base.Initialize();
         }
@@ -67,23 +74,30 @@ namespace TestGame
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            /**
-             * Load hero textures.
-             */
-            idleTexture = Content.Load<Texture2D>("assets/player/Player_Idle");
-            walkTexture = Content.Load<Texture2D>("assets/player/Player_walk");
-            runTexture = Content.Load<Texture2D>("assets/player/Player_run");
-            jumpTexture = Content.Load<Texture2D>("assets/player/Player_jump");
-            climbTexture = Content.Load<Texture2D>("assets/player/Player_climb");
+            _heroIdleSheet = new AnimationSheet(
+                Content.Load<Texture2D>("assets/player/Player_Idle"),
+                32, 40);
+            
+            _heroWalkSheet = new AnimationSheet(
+                Content.Load<Texture2D>("assets/player/Player_walk"),
+                32, 40);
+            
+            _heroRunSheet = new AnimationSheet(
+                Content.Load<Texture2D>("assets/player/Player_run"),
+                32, 40);
 
-            /**
+            _heroJumpSheet = new AnimationSheet(
+                Content.Load<Texture2D>("assets/player/Player_jump"),
+                32, 40);
+
+            /*
              * Load map.
              */
-            map = Content.Load<TiledMap>("map/GameMap");
-            mapRenderer.LoadMap(map);
+            _map = Content.Load<TiledMap>("map/GameMap");
+            _mapRenderer.LoadMap(_map);
 
-            this.collisionBox = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
-            this.collisionBox.SetData(new[] { Color.White });
+            this._collisionBox = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+            this._collisionBox.SetData(new[] { Color.White });
 
             InitializeGameObjects();
             // TODO: use this.Content to load your game content here
@@ -91,9 +105,13 @@ namespace TestGame
 
         private void InitializeGameObjects()
         {          
-            hero = new Hero(this.spawnPoint, this.idleTexture, this.walkTexture, this.runTexture, new KeyBoardReader());
+            _hero = new Hero(this._spawnPoint, _heroIdleSheet, _heroWalkSheet, _heroRunSheet, _heroJumpSheet, new KeyBoardReader());
 
-            groundLayer = this.map.GetLayer<TiledMapTileLayer>("GroundLayer_1");
+            _camera2D.TrackEntity(_hero);
+
+            _camera2D.HorizontalBounds = new Vector2(0, _map.WidthInPixels);
+            _camera2D.VerticalBounds = new Vector2(0, _map.HeightInPixels);
+            _groundLayer = this._map.GetLayer<TiledMapTileLayer>("GroundLayer_1");
         }
 
         protected override void Update(GameTime gameTime)
@@ -104,9 +122,12 @@ namespace TestGame
 
             // TODO: Add your update logic here
 
-            hero.Update(gameTime);
+            _hero.Update(gameTime);
 
-            mapRenderer.Update(gameTime);
+            _camera2D.Update();
+
+            Debug.WriteLine(_hero.Position);
+            _mapRenderer.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -115,26 +136,27 @@ namespace TestGame
 
         protected override void Draw(GameTime gameTime)
         {
-            mapRenderer.Draw();
+            _mapRenderer.Draw(viewMatrix: _camera2D.TransformationMatrix);
 
             // TODO: Add your drawing code here
 
-            _spriteBatch.Begin();
+            _spriteBatch.Begin(transformMatrix: _camera2D.TransformationMatrix);
 
-            hero.Draw(_spriteBatch);
+            _hero.Draw(_spriteBatch);
 
-            if (collisionManager.CheckCollision(hero.CollisionRectangle, groundLayer))
+            if (_collisionManager.CheckCollision(_hero.CollisionRectangle, _groundLayer))
             {
                 Debug.WriteLine("[" + gameTime.TotalGameTime + "] Collision detected.");
 
-                hero.Undo();
+                _hero.Undo();
             }
 
-            Rectangle collisionRect = hero.CollisionRectangle;
+            Rectangle collisionRect = _hero.CollisionRectangle;
 
             DrawBorder(collisionRect, 1, Color.Red);
 
             _spriteBatch.End();
+
 
             base.Draw(gameTime);
         }
@@ -142,18 +164,18 @@ namespace TestGame
         private void DrawBorder(Rectangle rectangleToDraw, int thicknessOfBorder, Color borderColor)
         {
             // Draw top line
-            _spriteBatch.Draw(collisionBox, new Rectangle(rectangleToDraw.X, rectangleToDraw.Y, rectangleToDraw.Width, thicknessOfBorder), borderColor);
+            _spriteBatch.Draw(_collisionBox, new Rectangle(rectangleToDraw.X, rectangleToDraw.Y, rectangleToDraw.Width, thicknessOfBorder), borderColor);
 
             // Draw left line
-            _spriteBatch.Draw(collisionBox, new Rectangle(rectangleToDraw.X, rectangleToDraw.Y, thicknessOfBorder, rectangleToDraw.Height), borderColor);
+            _spriteBatch.Draw(_collisionBox, new Rectangle(rectangleToDraw.X, rectangleToDraw.Y, thicknessOfBorder, rectangleToDraw.Height), borderColor);
 
             // Draw right line
-            _spriteBatch.Draw(collisionBox, new Rectangle((rectangleToDraw.X + rectangleToDraw.Width - thicknessOfBorder),
+            _spriteBatch.Draw(_collisionBox, new Rectangle((rectangleToDraw.X + rectangleToDraw.Width - thicknessOfBorder),
                                             rectangleToDraw.Y,
                                             thicknessOfBorder,
                                             rectangleToDraw.Height), borderColor);
             // Draw bottom line
-            _spriteBatch.Draw(collisionBox, new Rectangle(rectangleToDraw.X,
+            _spriteBatch.Draw(_collisionBox, new Rectangle(rectangleToDraw.X,
                                             rectangleToDraw.Y + rectangleToDraw.Height - thicknessOfBorder,
                                             rectangleToDraw.Width,
                                             thicknessOfBorder), borderColor);
