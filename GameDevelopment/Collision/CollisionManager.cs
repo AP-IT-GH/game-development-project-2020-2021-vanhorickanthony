@@ -1,19 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGame.Extended.Tiled;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 
-namespace TestGame.Collision
+namespace GameDevelopment.Collision
 {
     public class CollisionManager
     {
         TiledMapTile? collisionTile;
-        TiledMapTile? bottomCollisionTile;
-        TiledMapTile? topCollisionTile;
-        TiledMapTile? leftCollisionTile;
-        TiledMapTile? rightCollisionTile;
 
         public bool CheckCollision(Rectangle rect1, Rectangle rect2)
         {
@@ -22,6 +14,7 @@ namespace TestGame.Collision
 
             return false;
         }
+
 
         public bool CheckCollision(Rectangle origin, TiledMapTileLayer collisionLayer)
         {
