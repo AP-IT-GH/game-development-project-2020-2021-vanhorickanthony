@@ -4,11 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TestGame.Interfaces
+namespace GameDevelopment.Animation.Interfaces
 {
-    public interface IEntityDirection
+    public interface IDirection
     {
-        SpriteEffects Direction { get; set; }
+        SpriteEffects CurrentDirection { get; set; }
 
         void Update(Vector2 newDirection);
 
