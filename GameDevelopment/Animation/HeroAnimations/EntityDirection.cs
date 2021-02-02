@@ -1,36 +1,27 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameDevelopment.Animation.Interfaces;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using TestGame.Interfaces;
 
-namespace TestGame.Animation.HeroAnimations
+namespace GameDevelopment.Animation.HeroAnimations
 {
-    public class EntityDirection: IEntityDirection
+    public class Direction: IDirection
     {
-        private SpriteEffects currentDirection;
-
-        public EntityDirection(SpriteEffects Direction)
+        public Direction(SpriteEffects getDirection)
         {
-            currentDirection = Direction;
+            CurrentDirection = getDirection;
         }
 
-        public SpriteEffects Direction
-        {
-            get { return currentDirection; }
-            set { currentDirection = value; }
-        }
+        public SpriteEffects CurrentDirection { get; set; }
 
-       public void Update(Vector2 newDirection)
+        public void Update(Vector2 newDirection)
         {
             if (newDirection.X >= 1)
             {
-                this.currentDirection = SpriteEffects.None;
+                this.CurrentDirection = SpriteEffects.None;
             }
             else if (newDirection.X <= -1)
             {
-                this.currentDirection = SpriteEffects.FlipHorizontally;
+                this.CurrentDirection = SpriteEffects.FlipHorizontally;
             }
         }
     }
