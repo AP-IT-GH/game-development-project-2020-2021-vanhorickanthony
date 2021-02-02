@@ -1,18 +1,15 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using TestGame.Interfaces;
+﻿using GameDevelopment.Entity.Interfaces;
 
-namespace TestGame.Commands
+using Microsoft.Xna.Framework;
+
+namespace GameDevelopment.Commands
 {
     public class MoveCommand : IGameCommand
     {
         public Vector2 speed;
 
         public Vector2 lastPosition;
-
+        
         public MoveCommand()
         {
             this.speed = new Vector2(1, 1);

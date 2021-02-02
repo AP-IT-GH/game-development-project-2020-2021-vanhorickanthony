@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TestGame.Interfaces
+namespace GameDevelopment.Entity.Interfaces
 {
     public interface ITransform
     {

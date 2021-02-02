@@ -1,10 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using TestGame.Interfaces;
+﻿using GameDevelopment.Entity.Interfaces;
 
-namespace TestGame.Commands
+using System;
+using Microsoft.Xna.Framework;
+
+namespace GameDevelopment.Commands
 {
     public class MoveToCommando : IGameCommand
     {
