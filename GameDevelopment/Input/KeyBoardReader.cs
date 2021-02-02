@@ -1,11 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 
-namespace TestGame.Input
+namespace GameDevelopment.Input
 {
     class KeyBoardReader : IInputReader
     {
@@ -35,8 +31,8 @@ namespace TestGame.Input
                     direction.X = -1;
                 }
             }
-
-           else if (state.IsKeyDown(Keys.Right))
+            
+            else if (state.IsKeyDown(Keys.Right))
             {
                 if (state.IsKeyDown(Keys.LeftShift) || state.IsKeyDown(Keys.RightShift))
                 {
@@ -46,6 +42,11 @@ namespace TestGame.Input
                 {
                     direction.X = 1;
                 }
+            }
+
+            if (state.IsKeyDown(Keys.Space))
+            {
+                direction.Y = -2;
             }
             
             if (state.IsKeyDown(Keys.Down))

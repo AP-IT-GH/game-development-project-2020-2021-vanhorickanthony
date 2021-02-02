@@ -1,10 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace TestGame.Input
+namespace GameDevelopment.Input
 {
     public class MouseReader : IInputReader
     {
