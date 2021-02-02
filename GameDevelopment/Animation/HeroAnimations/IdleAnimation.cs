@@ -1,50 +1,27 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameDevelopment.Animation.Abstracts;
+using GameDevelopment.Animation.Interfaces;
+using GameDevelopment.Entity.Interfaces;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using TestGame.Interfaces;
 
-namespace TestGame.Animation.HeroAnimations
+namespace GameDevelopment.Animation.HeroAnimations
 {
-    public class IdleAnimation: IEntityAnimation
+    public class IdleAnimation: BaseAnimation
     {
-        private AnimationHandler Animation;
-        private IEntityDirection Direction;
-
-        Texture2D texture;
-        ITransform transform;
-
-        public IdleAnimation(Texture2D texture, ITransform transform)
+        
+        public IdleAnimation(IAnimationSheet animationSheet, ITransform transform): base(animationSheet, transform)
         {
-            this.transform = transform;
-            this.texture = texture;
-
-            Animation = new AnimationHandler();
-
-            Animation.AddFrame(new AnimationFrame(new Rectangle(0, 0, 32, 40)));
-            Animation.AddFrame(new AnimationFrame(new Rectangle(0, 40, 32, 40)));
-            Animation.AddFrame(new AnimationFrame(new Rectangle(0, 80, 32, 40)));
-            Animation.AddFrame(new AnimationFrame(new Rectangle(0, 120, 32, 40)));
-
+            
         }
 
-        public AnimationHandler Animatie
+        public new void Draw(SpriteBatch spriteBatch)
         {
-            get { return Animation; }
-            set { Animation = value; }
-        }
-       
-
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(texture, transform.Position, Animation.CurrentFrame.SourceRectangle, Color.White, 0, new Vector2(0, 0), 1f, this.Direction.Direction, 0);
+            base.Draw(spriteBatch);
         }
 
-        public void Update(GameTime gameTime, IEntityDirection spriteDirection)
+        public new void Update(GameTime gameTime, IDirection spriteDirection)
         {
-            this.Direction = spriteDirection;
-            this.Animation.Update(gameTime);
+            base.Update(gameTime, spriteDirection);
         }
     }
 }
