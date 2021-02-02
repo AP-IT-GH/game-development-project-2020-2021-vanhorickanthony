@@ -1,10 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.Text;
 
-namespace TestGame.Animation
+namespace GameDevelopment.Animation
 {
     public class AnimationFrame
     {
