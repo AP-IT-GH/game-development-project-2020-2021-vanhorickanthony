@@ -121,3 +121,8 @@
 /processor:TiledMapProcessor
 /build:map/Level_1.tmx
 
+#begin map/Test.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:map/Test.tmx
+
