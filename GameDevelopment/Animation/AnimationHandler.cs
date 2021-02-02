@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace TestGame.Animation
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+
+namespace GameDevelopment.Animation
 {
     public class AnimationHandler
     {
@@ -14,11 +14,21 @@ namespace TestGame.Animation
         private int counter;
 
         private double frameMovement = 0;
-       
-
+        
         public AnimationHandler()
         {
             frames = new List<AnimationFrame>();
+        }
+
+        public void AddFrames(Texture2D texture, int spriteWidth, int spriteHeight)
+        {
+            for (int x = 0; x < texture.Width; x += spriteWidth)
+            {
+                for (int y = 0; y < texture.Height; y += spriteHeight)
+                {
+                    this.AddFrame(new AnimationFrame(new Rectangle(x, y, spriteWidth, spriteHeight)));
+                }
+            }
         }
 
         public void AddFrame(AnimationFrame animationFrame)
