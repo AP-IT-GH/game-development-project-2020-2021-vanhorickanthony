@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 
 using GameDevelopment.Animation;
 using GameDevelopment.Animation.Interfaces;
@@ -13,6 +14,7 @@ using Microsoft.Xna.Framework.Input;
 
 using MonoGame.Extended.Tiled;
 using MonoGame.Extended.Tiled.Renderers;
+using SharpDX.DirectWrite;
 
 namespace GameDevelopment
 {
@@ -39,7 +41,9 @@ namespace GameDevelopment
         private TiledMap _map;
         private TiledMapRenderer _mapRenderer;
 
-        TiledMapTileLayer _groundLayer, _lavaLayer;
+        private TiledMapTileLayer _skyLayer, _treeLine1, _treeLine2, _treeLine3, _groundLayer1, _groundLayer2;
+
+        private TiledMapGroupLayer _treeLayers, _skyLayers;
 
         public Game1()
         {
@@ -111,11 +115,27 @@ namespace GameDevelopment
 
             _camera2D.HorizontalBounds = new Vector2(0, _map.WidthInPixels);
             _camera2D.VerticalBounds = new Vector2(0, _map.HeightInPixels);
-            _groundLayer = this._map.GetLayer<TiledMapTileLayer>("GroundLayer_1");
+            
+            /*
+             * Main ground layers - player walks on this.
+             */
+            _groundLayer1 = this._map.GetLayer<TiledMapTileLayer>("GroundLayer_1");
+            _groundLayer2 = this._map.GetLayer<TiledMapTileLayer>("GroundLayer_2");
+            
+            /*
+             * Background decoration layers - these layers do not provide interaction, but are mere decoration for the settings.
+             */
+            _treeLayers = this._map.GetLayer<TiledMapGroupLayer>("TreeLayers");
+            
+            /*
+             * The main background - this is what we perform parallaxing on.
+             */
+            _skyLayers = this._map.GetLayer<TiledMapGroupLayer>("SkyLayers");
         }
 
         protected override void Update(GameTime gameTime)
         {
+
             
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
@@ -136,15 +156,39 @@ namespace GameDevelopment
 
         protected override void Draw(GameTime gameTime)
         {
-            _mapRenderer.Draw(viewMatrix: _camera2D.TransformationMatrix);
+            /*
+             * Render map layers with respect to their position relative to each other.
+             * TiledMapRenderer does not provide a functionality to attach a different viewMatrix to a distinct layer,
+             * so each layer needs to be drawn separately.
+             */
 
-            // TODO: Add your drawing code here
+            foreach (TiledMapLayer skyLayer in _skyLayers.Layers)
+            {
+                float parallaxFactor = 1;
+
+                if (skyLayer.Properties.ContainsKey("ParallaxFactor"))
+                {
+                    parallaxFactor = float.Parse(skyLayer.Properties["ParallaxFactor"]);
+                }
+
+                Matrix viewMatrix = _camera2D.GetViewMatrix(new Vector2(1, 1));
+
+                _mapRenderer.Draw(skyLayer, viewMatrix: viewMatrix);
+            }
+            
+            foreach (TiledMapLayer treeLayer in _treeLayers.Layers)
+            {
+                _mapRenderer.Draw(treeLayer, viewMatrix: _camera2D.TransformationMatrix);
+            }
+            
+            _mapRenderer.Draw(_groundLayer2, viewMatrix: _camera2D.TransformationMatrix);
+            _mapRenderer.Draw(_groundLayer1, viewMatrix: _camera2D.TransformationMatrix);
 
             _spriteBatch.Begin(transformMatrix: _camera2D.TransformationMatrix);
 
             _hero.Draw(_spriteBatch);
 
-            if (_collisionManager.CheckCollision(_hero.CollisionRectangle, _groundLayer))
+            if (_collisionManager.CheckCollision(_hero, _groundLayer1))
             {
                 Debug.WriteLine("[" + gameTime.TotalGameTime + "] Collision detected.");
 
@@ -156,8 +200,7 @@ namespace GameDevelopment
             DrawBorder(collisionRect, 1, Color.Red);
 
             _spriteBatch.End();
-
-
+            
             base.Draw(gameTime);
         }
 
