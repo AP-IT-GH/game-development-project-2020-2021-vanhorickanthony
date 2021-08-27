@@ -36,7 +36,7 @@ namespace GameDevelopment.Entity.Abstracts
 
             this.Animations = new Dictionary<Vector2, IAnimation>();
 
-            EntityDirection = new Direction(SpriteEffects.None);
+            this.EntityDirection = new Direction(SpriteEffects.None);
 
             this.InputReader = inputReader;
 

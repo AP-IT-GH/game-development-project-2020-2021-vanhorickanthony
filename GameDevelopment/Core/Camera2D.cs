@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Diagnostics;
 
-using GameDevelopment.Entity;
 using GameDevelopment.Entity.Abstracts;
 
 using Microsoft.Xna.Framework;
@@ -15,6 +13,7 @@ namespace GameDevelopment.Core
 
         private BaseEntity _entity;
         private Viewport _viewport;
+        private Vector2 _origin;
 
         public Vector2 HorizontalBounds { get; set; }
         public Vector2 VerticalBounds { get; set; }
@@ -22,6 +21,8 @@ namespace GameDevelopment.Core
         public Camera2D(Viewport viewport)
         {
             this._viewport = viewport;
+            
+            this._origin = new Vector2(viewport.Width / 2.0f, viewport.Height / 2.0f);
         }
 
         public void TrackEntity(BaseEntity entity)
@@ -37,6 +38,16 @@ namespace GameDevelopment.Core
                     -_applyBounds( (int) _entity.Position.Y, _viewport.Height / 2, (int) VerticalBounds.Y - (_viewport.Height / 2)) + (_viewport.Height / 2), 
                     0)
                 );
+        }
+
+        public Matrix GetViewMatrix(Vector2 parallax)
+        {
+            return Matrix.CreateTranslation(
+                new Vector3(
+                    -_applyBounds((int) (_entity.Position.X), (int) ((_viewport.Width / 2) * parallax.X), (int) (HorizontalBounds.Y - (_viewport.Width / 2)) + (_viewport.Width / 2)),
+                    -_applyBounds( (int) (_entity.Position.Y * parallax.Y), _viewport.Height / 2, (int) VerticalBounds.Y - (_viewport.Height / 2)) + (_viewport.Height / 2), 
+                    0)
+            );
         }
 
         private int _applyBounds(int value, int boundOne, int boundTwo)

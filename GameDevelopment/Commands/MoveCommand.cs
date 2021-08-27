@@ -17,8 +17,10 @@ namespace GameDevelopment.Commands
 
         public void Execute(ITransform transform, Vector2 direction)
         {
-            lastPosition = transform.Position;
+            this.lastPosition = transform.Position;
+            
             direction *= speed;
+            
             transform.Position += direction;
         }
 
