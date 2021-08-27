@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameDevelopment.Collision.Interfaces;
+using Microsoft.Xna.Framework;
 using MonoGame.Extended.Tiled;
 
 namespace GameDevelopment.Collision
@@ -16,11 +17,11 @@ namespace GameDevelopment.Collision
         }
 
 
-        public bool CheckCollision(Rectangle origin, TiledMapTileLayer collisionLayer)
+        public bool CheckCollision(ICollision collider, TiledMapTileLayer collisionLayer)
         {
-            for (int x = origin.X; x < origin.X + origin.Width; x++)
+            for (int x = collider.CollisionRectangle.X; x < collider.CollisionRectangle.X + collider.CollisionRectangle.Width; x++)
             {
-                for (int y = origin.Y; y < origin.Y + origin.Height; y++)
+                for (int y = collider.CollisionRectangle.Y; y < collider.CollisionRectangle.Y + collider.CollisionRectangle.Height; y++)
                 {
                     if (collisionLayer.TryGetTile(
                         (ushort)(x / collisionLayer.TileWidth),
