@@ -1,4 +1,5 @@
-﻿using GameDevelopment.Entity.Interfaces;
+﻿using System;
+using GameDevelopment.Entity.Interfaces;
 
 using Microsoft.Xna.Framework;
 

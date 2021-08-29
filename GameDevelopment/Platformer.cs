@@ -11,7 +11,7 @@ using GameDevelopment.Entity;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+using MonoGame.Extended;
 using MonoGame.Extended.Tiled;
 using MonoGame.Extended.Tiled.Renderers;
 using SharpDX.DirectWrite;
@@ -187,10 +187,22 @@ namespace GameDevelopment
             _spriteBatch.Begin(transformMatrix: _camera2D.TransformationMatrix);
 
             _hero.Draw(_spriteBatch);
+            
+            if (_collisionManager.CheckBottomCollision(_hero, _groundLayer1))
+            {
+                _hero.Gravity = new Vector2(0, 0);
+            }
+            else
+            {
+                _hero.Gravity = new Vector2(
+                    0f,
+                    (_hero.Gravity.Y != 0f) ? _hero.Gravity.Y * 1.05f : 1.1f
+                );
+            }
 
             if (_collisionManager.CheckCollision(_hero, _groundLayer1))
             {
-                Debug.WriteLine("[" + gameTime.TotalGameTime + "] Collision detected.");
+                Console.WriteLine("[" + gameTime.TotalGameTime + "] Collision detected.");
 
                 _hero.Undo();
             }

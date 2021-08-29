@@ -14,12 +14,13 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameDevelopment.Entity.Abstracts
 {
-    public abstract class BaseEntity: ITransform, ICollision
+    public abstract class BaseEntity: ITransform, ICollision, IGravity
     {
         public Vector2 Position { get; set; }
         public Rectangle CollisionRectangle { get; set; }
-
-
+        
+        public Vector2 Gravity { get; set; }
+        
         protected IInputReader InputReader;
 
         protected IGameCommand MoveCommand;
@@ -51,7 +52,7 @@ namespace GameDevelopment.Entity.Abstracts
 
             var direction = InputReader.ReadInput();
 
-            MoveHorizontal(direction);
+            Move(direction);
 
             SelectedAnimation.Update(gameTime, EntityDirection);
 
@@ -62,10 +63,55 @@ namespace GameDevelopment.Entity.Abstracts
 
             CollisionRectangle = collisionRectangle;
         }
+        
+        private void Move(Vector2 direction)
+        {
+            Vector2 animationVector = new Vector2(0, 0); 
+            
+            if ( (Math.Abs(direction.Y) > 0) || Math.Abs(Gravity.Y) > 0)
+            {
+                animationVector = new Vector2(0, 5);
+            }
+            else if (Math.Abs(direction.X) > 0)
+            {
+                animationVector = new Vector2(Math.Abs(direction.X), 0);
+            }
+
+            Debug.WriteLine(animationVector);
+
+            if (Animations.ContainsKey(animationVector))
+            {
+                SelectedAnimation = Animations[animationVector];
+            }
+            else
+            {
+                SelectedAnimation = Animations[new Vector2(0, 0)];
+            }
+
+            MoveCommand.Execute(this, direction + Gravity);
+        }
 
         private void MoveHorizontal(Vector2 direction)
         {
-            Vector2 currentVector = new Vector2(Math.Abs(direction.X), Math.Abs(direction.Y));
+            Vector2 currentVector = new Vector2(direction.X, 0);
+
+            Debug.WriteLine(currentVector);
+
+            if (Animations.ContainsKey(currentVector))
+            {
+                SelectedAnimation = Animations[new Vector2(Math.Abs(direction.X), 0)];
+            }
+            else
+            {
+                SelectedAnimation = Animations[new Vector2(0, 0)];
+            }
+
+            MoveCommand.Execute(this, new Vector2(direction.X, 0));
+        }
+        
+        private void MoveVertical(Vector2 direction)
+        {
+            Vector2 currentVector = new Vector2(0, Math.Abs(direction.Y));
 
             Debug.WriteLine(currentVector);
 
@@ -78,7 +124,27 @@ namespace GameDevelopment.Entity.Abstracts
                 SelectedAnimation = Animations[new Vector2(0, 0)];
             }
 
-            MoveCommand.Execute(this, direction);
+            MoveCommand.Execute(this, new Vector2(0, direction.Y + Gravity.Y));
+        }
+        
+        private void ApplyGravity(Vector2 direction)
+        {
+            Vector2 currentVector = new Vector2(0, Math.Abs(direction.Y));
+
+            if (Animations.ContainsKey(currentVector))
+            {
+                SelectedAnimation = Animations[currentVector];
+            }
+            else
+            {
+                SelectedAnimation = Animations[new Vector2(0, 0)];
+            }
+
+            Console.WriteLine("Hello?");
+
+            Console.WriteLine(Gravity.Y);
+
+            MoveCommand.Execute(this, Gravity);
         }
 
         public void Undo()

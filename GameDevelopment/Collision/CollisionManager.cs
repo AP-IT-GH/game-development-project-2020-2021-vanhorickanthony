@@ -7,6 +7,8 @@ namespace GameDevelopment.Collision
     public class CollisionManager
     {
         TiledMapTile? collisionTile;
+        
+        public Vector2 Gravity { get; set; }
 
         public bool CheckCollision(Rectangle rect1, Rectangle rect2)
         {
@@ -43,6 +45,36 @@ namespace GameDevelopment.Collision
                     {
                         continue;
                     }
+                }
+            }
+
+            return false;
+
+        }
+        
+        public bool CheckBottomCollision(ICollision collider, TiledMapTileLayer collisionLayer)
+        {
+            for (int x = collider.CollisionRectangle.X; x < collider.CollisionRectangle.X + collider.CollisionRectangle.Width; x++)
+            { 
+                if (collisionLayer.TryGetTile(
+                        (ushort)(x / collisionLayer.TileWidth),
+                        (ushort)( (collider.CollisionRectangle.Y + collider.CollisionRectangle.Height) / collisionLayer.TileHeight),
+                        out collisionTile
+                    )
+                )
+                {
+                    if (collisionTile.Value.IsBlank)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    continue;
                 }
             }
 
