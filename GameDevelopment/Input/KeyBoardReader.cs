@@ -46,7 +46,7 @@ namespace GameDevelopment.Input
 
             if (state.IsKeyDown(Keys.Space))
             {
-                direction.Y = -2;
+                direction.Y = -5;
             }
             
             if (state.IsKeyDown(Keys.Down))
