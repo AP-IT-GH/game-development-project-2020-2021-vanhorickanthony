@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Collections.Specialized;
 using System.Diagnostics;
 
 using GameDevelopment.Animation;
@@ -14,7 +17,8 @@ using Microsoft.Xna.Framework.Input;
 using MonoGame.Extended;
 using MonoGame.Extended.Tiled;
 using MonoGame.Extended.Tiled.Renderers;
-using SharpDX.DirectWrite;
+
+using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 
 namespace GameDevelopment
 {
@@ -32,6 +36,8 @@ namespace GameDevelopment
         private Texture2D _collisionBox;
 
         Hero _hero;
+        
+        NPC_Controller.NPC_Controller _npcController;
 
         CollisionManager _collisionManager;
 
@@ -44,6 +50,11 @@ namespace GameDevelopment
         private TiledMapTileLayer _skyLayer, _treeLine1, _treeLine2, _treeLine3, _groundLayer1, _groundLayer2;
 
         private TiledMapGroupLayer _treeLayers, _skyLayers;
+
+        private float _gravityBase;
+        private float _gravityVelocity;
+
+        private float _gravityMax;
 
         public Game1()
         {
@@ -72,6 +83,20 @@ namespace GameDevelopment
             _spawnPoint = new Vector2(0, 376);
                 
             base.Initialize();
+        }
+
+        protected void LoadConfiguration()
+        {
+            Debug.WriteLine(GameSettings.Default.GravityBase);
+            Debug.WriteLine(GameSettings.Default.GravityMax);
+            Debug.WriteLine(GameSettings.Default.GravityVelocity);
+
+
+            _gravityBase = float.Parse(ConfigurationManager.AppSettings.Get("GravityBase"));
+            
+            _gravityVelocity = float.Parse(ConfigurationManager.AppSettings.Get("GravityVelocity"));
+
+            _gravityMax = float.Parse(ConfigurationManager.AppSettings.Get("GravityMax"));
         }
 
         protected override void LoadContent()
@@ -110,7 +135,15 @@ namespace GameDevelopment
         private void InitializeGameObjects()
         {          
             _hero = new Hero(this._spawnPoint, _heroIdleSheet, _heroWalkSheet, _heroRunSheet, _heroJumpSheet, new KeyBoardReader());
+            
+            Hostile_NPC _enemy_1 = new Hostile_NPC(new Vector2(100, 376), _heroIdleSheet, _heroWalkSheet, _heroRunSheet, _heroJumpSheet, new AIInputReader());
 
+            _npcController = new NPC_Controller.NPC_Controller(new List<Tuple<Vector2, Hostile_NPC>> 
+                {
+                    new Tuple<Vector2, Hostile_NPC>(new Vector2(10, 376), _enemy_1)
+                }
+            );
+            
             _camera2D.TrackEntity(_hero);
 
             _camera2D.HorizontalBounds = new Vector2(0, _map.WidthInPixels);
@@ -143,6 +176,8 @@ namespace GameDevelopment
             // TODO: Add your update logic here
 
             _hero.Update(gameTime);
+
+            _npcController.Update(gameTime);
 
             _camera2D.Update();
 
@@ -187,6 +222,8 @@ namespace GameDevelopment
             _spriteBatch.Begin(transformMatrix: _camera2D.TransformationMatrix);
 
             _hero.Draw(_spriteBatch);
+
+            _npcController.Draw(gameTime, _spriteBatch);
             
             if (_collisionManager.CheckBottomCollision(_hero, _groundLayer1))
             {
@@ -196,13 +233,13 @@ namespace GameDevelopment
             {
                 _hero.Gravity = new Vector2(
                     0f,
-                    (_hero.Gravity.Y != 0f) ? _hero.Gravity.Y * 1.05f : 1.1f
+                    (_hero.Gravity.Y != 0f) ? _hero.Gravity.Y * GameSettings.Default.GravityVelocity : GameSettings.Default.GravityBase
                 );
             }
 
             if (_collisionManager.CheckCollision(_hero, _groundLayer1))
             {
-                Console.WriteLine("[" + gameTime.TotalGameTime + "] Collision detected.");
+                // Console.WriteLine("[" + gameTime.TotalGameTime + "] Collision detected.");
 
                 _hero.Undo();
             }

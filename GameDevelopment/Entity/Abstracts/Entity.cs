@@ -48,9 +48,9 @@ namespace GameDevelopment.Entity.Abstracts
 
         public void Update(GameTime gameTime)
         {
-            this.EntityDirection.Update(InputReader.ReadInput());
-
             var direction = InputReader.ReadInput();
+
+            this.EntityDirection.Update(direction);
 
             Move(direction);
 
@@ -76,9 +76,7 @@ namespace GameDevelopment.Entity.Abstracts
             {
                 animationVector = new Vector2(Math.Abs(direction.X), 0);
             }
-
-            Debug.WriteLine(animationVector);
-
+            
             if (Animations.ContainsKey(animationVector))
             {
                 SelectedAnimation = Animations[animationVector];
@@ -95,8 +93,6 @@ namespace GameDevelopment.Entity.Abstracts
         {
             Vector2 currentVector = new Vector2(direction.X, 0);
 
-            Debug.WriteLine(currentVector);
-
             if (Animations.ContainsKey(currentVector))
             {
                 SelectedAnimation = Animations[new Vector2(Math.Abs(direction.X), 0)];
@@ -112,8 +108,6 @@ namespace GameDevelopment.Entity.Abstracts
         private void MoveVertical(Vector2 direction)
         {
             Vector2 currentVector = new Vector2(0, Math.Abs(direction.Y));
-
-            Debug.WriteLine(currentVector);
 
             if (Animations.ContainsKey(currentVector))
             {
@@ -139,10 +133,6 @@ namespace GameDevelopment.Entity.Abstracts
             {
                 SelectedAnimation = Animations[new Vector2(0, 0)];
             }
-
-            Console.WriteLine("Hello?");
-
-            Console.WriteLine(Gravity.Y);
 
             MoveCommand.Execute(this, Gravity);
         }

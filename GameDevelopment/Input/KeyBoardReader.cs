@@ -5,6 +5,11 @@ namespace GameDevelopment.Input
 {
     class KeyBoardReader : IInputReader
     {
+        public Vector2 ReadInput(Vector2 direction)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public bool ReadFollower()
         {
             KeyboardState state = Keyboard.GetState();

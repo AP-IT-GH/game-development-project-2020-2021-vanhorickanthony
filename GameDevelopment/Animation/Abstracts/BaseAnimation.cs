@@ -1,3 +1,4 @@
+using System;
 using GameDevelopment.Animation.Interfaces;
 using GameDevelopment.Entity.Interfaces;
 
@@ -25,16 +26,17 @@ namespace GameDevelopment.Animation.Abstracts
             
             _animationHandler.AddFrames(animationSheet.GetTexture(), animationSheet.GetSpriteWidth(), animationSheet.GetSpriteHeight());
         }
+        
+        public void Update(GameTime gameTime, IDirection spriteDirection)
+        {
+            this._direction = spriteDirection;
+            
+            _animationHandler.Update(gameTime);
+        }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(_texture, _transform.Position, _animationHandler.CurrentFrame.SourceRectangle, Color.White, 0, new Vector2(0, 0), 1f, this._direction.CurrentDirection, 0);
-        }
-
-        public void Update(GameTime gameTime, IDirection spriteDirection)
-        {
-            this._direction = spriteDirection;
-            _animationHandler.Update(gameTime);
         }
     }
 }

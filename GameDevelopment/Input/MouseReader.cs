@@ -6,6 +6,11 @@ namespace GameDevelopment.Input
 {
     public class MouseReader : IInputReader
     {
+        public Vector2 ReadInput(Vector2 direction)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool ReadFollower()
         {
             throw new NotImplementedException();
