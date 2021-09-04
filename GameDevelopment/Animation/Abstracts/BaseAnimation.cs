@@ -1,9 +1,11 @@
 using System;
-using GameDevelopment.Animation.Interfaces;
-using GameDevelopment.Entity.Interfaces;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+
+using GameDevelopment.Animation.HeroAnimations;
+using GameDevelopment.Animation.Interfaces;
+using GameDevelopment.Entity.Interfaces;
 
 namespace GameDevelopment.Animation.Abstracts
 {
@@ -19,8 +21,8 @@ namespace GameDevelopment.Animation.Abstracts
 
         protected BaseAnimation(IAnimationSheet animationSheet, ITransform transform)
         {
-            this._texture = animationSheet.GetTexture();
-            this._transform = transform;
+            _texture = animationSheet.GetTexture();
+            _transform = transform;
 
             _animationHandler = new AnimationHandler();
             
@@ -29,13 +31,18 @@ namespace GameDevelopment.Animation.Abstracts
         
         public void Update(GameTime gameTime, IDirection spriteDirection)
         {
-            this._direction = spriteDirection;
-            
+            _direction = spriteDirection;
+
             _animationHandler.Update(gameTime);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            if (_direction == null)
+            {
+                _direction = new Direction(SpriteEffects.None);
+            }
+            
             spriteBatch.Draw(_texture, _transform.Position, _animationHandler.CurrentFrame.SourceRectangle, Color.White, 0, new Vector2(0, 0), 1f, this._direction.CurrentDirection, 0);
         }
     }
