@@ -6,9 +6,9 @@ namespace GameDevelopment.Animation.HeroAnimations
 {
     public class Direction: IDirection
     {
-        public Direction(SpriteEffects getDirection)
+        public Direction(SpriteEffects currentDirection)
         {
-            CurrentDirection = getDirection;
+            CurrentDirection = currentDirection;
         }
 
         public SpriteEffects CurrentDirection { get; set; }
@@ -17,11 +17,11 @@ namespace GameDevelopment.Animation.HeroAnimations
         {
             if (newDirection.X >= 1)
             {
-                this.CurrentDirection = SpriteEffects.None;
+                CurrentDirection = SpriteEffects.None;
             }
             else if (newDirection.X <= -1)
             {
-                this.CurrentDirection = SpriteEffects.FlipHorizontally;
+                CurrentDirection = SpriteEffects.FlipHorizontally;
             }
         }
     }
