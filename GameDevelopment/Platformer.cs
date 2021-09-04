@@ -10,7 +10,9 @@ using GameDevelopment.Collision;
 using GameDevelopment.Core;
 using GameDevelopment.Input;
 using GameDevelopment.Entity;
-
+using GameDevelopment.GameState;
+using GameDevelopment.GameState.Abstracts;
+using GameDevelopment.GameState.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -33,6 +35,8 @@ namespace GameDevelopment
 
         private IAnimationSheet _heroIdleSheet, _heroWalkSheet, _heroRunSheet, _heroJumpSheet;
 
+        private IAnimationSheet _wolfIdleSheet, _wolfWalkSheet, _wolfRunSheet;
+        
         private Texture2D _collisionBox;
 
         Hero _hero;
@@ -55,6 +59,12 @@ namespace GameDevelopment
         private float _gravityVelocity;
 
         private float _gravityMax;
+
+        private GameState.Abstracts.RenderableState _levelOne;
+
+        private GameState.Abstracts.RenderableState _menu;
+
+        private ContextHandler _contextHandler;
 
         public Game1()
         {
@@ -81,28 +91,39 @@ namespace GameDevelopment
             _collisionManager = new CollisionManager();
 
             _spawnPoint = new Vector2(0, 376);
-                
+
+            _contextHandler = new ContextHandler();
+
             base.Initialize();
-        }
-
-        protected void LoadConfiguration()
-        {
-            Debug.WriteLine(GameSettings.Default.GravityBase);
-            Debug.WriteLine(GameSettings.Default.GravityMax);
-            Debug.WriteLine(GameSettings.Default.GravityVelocity);
-
-
-            _gravityBase = float.Parse(ConfigurationManager.AppSettings.Get("GravityBase"));
-            
-            _gravityVelocity = float.Parse(ConfigurationManager.AppSettings.Get("GravityVelocity"));
-
-            _gravityMax = float.Parse(ConfigurationManager.AppSettings.Get("GravityMax"));
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            _levelOne = new LevelOne(_camera2D, _collisionManager, _spriteBatch, Content, _mapRenderer);
+            
+            _levelOne.LoadContent();
+
+            _contextHandler = new ContextHandler(_levelOne);
+
+            _levelOne.ContextHandler = _contextHandler;
+            
+            /*
+
+            _menu = new MainMenu(_camera2D, _collisionManager, _spriteBatch, Content, _mapRenderer);
+
+            _contextHandler = new ContextHandler(_menu);
+
+            _menu.ContextHandler = _contextHandler;
+            
+            _menu.LoadContent();
+            */
+
+
+            /*
+            * Load hero sprites.
+            *
             _heroIdleSheet = new AnimationSheet(
                 Content.Load<Texture2D>("assets/player/Player_Idle"),
                 32, 40);
@@ -119,24 +140,46 @@ namespace GameDevelopment
                 Content.Load<Texture2D>("assets/player/Player_jump"),
                 32, 40);
 
+
+            /*
+            * Load wolf sprites.
+            *
+            _wolfIdleSheet = new AnimationSheet(
+                Content.Load<Texture2D>("assets/npc/Wolf_01_Idle"),
+                64, 32);
+
+            _wolfWalkSheet = new AnimationSheet(
+                Content.Load<Texture2D>("assets/npc/Wolf_02_Move"),
+                64, 32);
+
+            _wolfRunSheet = new AnimationSheet(
+                Content.Load<Texture2D>("assets/npc/Wolf_04_Run-Loop"),
+                64, 32);
+
             /*
              * Load map.
-             */
+             *
             _map = Content.Load<TiledMap>("map/GameMap");
             _mapRenderer.LoadMap(_map);
 
             this._collisionBox = new Texture2D(GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
             this._collisionBox.SetData(new[] { Color.White });
+            **/
 
+            
+            _contextHandler.State.InitializeGameObjects();
+            
             InitializeGameObjects();
+            
             // TODO: use this.Content to load your game content here
         }
 
         private void InitializeGameObjects()
-        {          
+        {
+            /*
             _hero = new Hero(this._spawnPoint, _heroIdleSheet, _heroWalkSheet, _heroRunSheet, _heroJumpSheet, new KeyBoardReader());
             
-            Hostile_NPC _enemy_1 = new Hostile_NPC(new Vector2(100, 376), _heroIdleSheet, _heroWalkSheet, _heroRunSheet, _heroJumpSheet, new AIInputReader());
+            Hostile_NPC _enemy_1 = new Hostile_NPC(new Vector2(890, 32), _wolfIdleSheet, _wolfWalkSheet, _wolfRunSheet, _wolfIdleSheet, new AIInputReader());
 
             _npcController = new NPC_Controller.NPC_Controller(new List<Tuple<Vector2, Hostile_NPC>> 
                 {
@@ -151,29 +194,36 @@ namespace GameDevelopment
             
             /*
              * Main ground layers - player walks on this.
-             */
+             *
             _groundLayer1 = this._map.GetLayer<TiledMapTileLayer>("GroundLayer_1");
             _groundLayer2 = this._map.GetLayer<TiledMapTileLayer>("GroundLayer_2");
             
             /*
              * Background decoration layers - these layers do not provide interaction, but are mere decoration for the settings.
-             */
+             *
             _treeLayers = this._map.GetLayer<TiledMapGroupLayer>("TreeLayers");
             
             /*
              * The main background - this is what we perform parallaxing on.
-             */
+             *
             _skyLayers = this._map.GetLayer<TiledMapGroupLayer>("SkyLayers");
+            */
+            _contextHandler.State.InitializeGameObjects();
         }
 
         protected override void Update(GameTime gameTime)
         {
-
-            
+            /*
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+                */
 
             // TODO: Add your update logic here
+
+
+            _contextHandler.State.Update(gameTime);
+
+            /*
 
             _hero.Update(gameTime);
 
@@ -183,6 +233,8 @@ namespace GameDevelopment
 
             Debug.WriteLine(_hero.Position);
             _mapRenderer.Update(gameTime);
+            
+            */
 
             base.Update(gameTime);
         }
@@ -191,11 +243,12 @@ namespace GameDevelopment
 
         protected override void Draw(GameTime gameTime)
         {
+            GraphicsDevice.Clear(Color.Black);
             /*
              * Render map layers with respect to their position relative to each other.
              * TiledMapRenderer does not provide a functionality to attach a different viewMatrix to a distinct layer,
              * so each layer needs to be drawn separately.
-             */
+             *
 
             foreach (TiledMapLayer skyLayer in _skyLayers.Layers)
             {
@@ -223,7 +276,10 @@ namespace GameDevelopment
 
             _hero.Draw(_spriteBatch);
 
-            _npcController.Draw(gameTime, _spriteBatch);
+            _npcController.Draw(_spriteBatch);
+            
+            _npcController.ApplyGravity(_collisionManager, _groundLayer1);
+            _npcController.CheckCollision(_collisionManager, _groundLayer1);
             
             if (_collisionManager.CheckBottomCollision(_hero, _groundLayer1))
             {
@@ -249,6 +305,10 @@ namespace GameDevelopment
             DrawBorder(collisionRect, 1, Color.Red);
 
             _spriteBatch.End();
+            */
+
+            _contextHandler.State.Draw(gameTime);
+
             
             base.Draw(gameTime);
         }
