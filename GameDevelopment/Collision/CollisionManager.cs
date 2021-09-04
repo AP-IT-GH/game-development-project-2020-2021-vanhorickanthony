@@ -52,6 +52,12 @@ namespace GameDevelopment.Collision
 
         }
         
+        public bool CheckCollision(ICollision collider_1, ICollision collider_2)
+        {
+            return CheckCollision(collider_1.CollisionRectangle, collider_2.CollisionRectangle);
+
+        }
+        
         public bool CheckBottomCollision(ICollision collider, TiledMapTileLayer collisionLayer)
         {
             for (int x = collider.CollisionRectangle.X; x < collider.CollisionRectangle.X + collider.CollisionRectangle.Width; x++)
