@@ -1,16 +1,18 @@
 ﻿using System;
 
 using GameDevelopment.Entity.Abstracts;
-
+using GameDevelopment.Entity.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace GameDevelopment.Core
 {
-    class Camera2D
+    public class Camera2D
     {
         public Matrix TransformationMatrix { get; private set; }
 
+        private ITransform _object;
+        
         private BaseEntity _entity;
         private Viewport _viewport;
         private Vector2 _origin;
@@ -20,11 +22,16 @@ namespace GameDevelopment.Core
 
         public Camera2D(Viewport viewport)
         {
-            this._viewport = viewport;
-            
-            this._origin = new Vector2(viewport.Width / 2.0f, viewport.Height / 2.0f);
+            _viewport = viewport;
+                
+            _origin = new Vector2(viewport.Width / 2.0f, viewport.Height / 2.0f);
         }
 
+        public void Track(ITransform trackableObject)
+        {
+            this._object = trackableObject;
+        }
+        
         public void TrackEntity(BaseEntity entity)
         {
             this._entity = entity;
@@ -34,8 +41,8 @@ namespace GameDevelopment.Core
         {
             TransformationMatrix = Matrix.CreateTranslation(
                 new Vector3(
-                    -_applyBounds((int) _entity.Position.X, _viewport.Width / 2, (int) HorizontalBounds.Y - (_viewport.Width / 2)) + (_viewport.Width / 2),
-                    -_applyBounds( (int) _entity.Position.Y, _viewport.Height / 2, (int) VerticalBounds.Y - (_viewport.Height / 2)) + (_viewport.Height / 2), 
+                    -_applyBounds((int) _object.Position.X, _viewport.Width / 2, (int) HorizontalBounds.Y - (_viewport.Width / 2)) + (_viewport.Width / 2),
+                    -_applyBounds( (int) _object.Position.Y, _viewport.Height / 2, (int) VerticalBounds.Y - (_viewport.Height / 2)) + (_viewport.Height / 2), 
                     0)
                 );
         }
