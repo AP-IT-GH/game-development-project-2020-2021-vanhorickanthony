@@ -16,6 +16,7 @@ namespace GameDevelopment.Entity.Abstracts
 {
     public abstract class BaseEntity: ITransform, ICollision, IGravity
     {
+        public int Health;
         public Vector2 Position { get; set; }
         public Rectangle CollisionRectangle { get; set; }
         
@@ -25,41 +26,55 @@ namespace GameDevelopment.Entity.Abstracts
 
         protected IGameCommand MoveCommand;
 
-        protected IDirection EntityDirection;
+        public IDirection EntityDirection;
 
         protected Dictionary<Vector2, IAnimation> Animations;
 
         protected IAnimation SelectedAnimation;
 
-        protected BaseEntity(Vector2 spawnPosition, IInputReader inputReader, Rectangle collisionRectangle)
+        private float _collisionOffsetX;
+        private float _collisionOffsetY;
+        
+        protected BaseEntity(
+            Vector2 spawnPosition,
+            IInputReader inputReader, 
+            Rectangle collisionRectangle,
+            float collisionOffsetX = 0f,
+            float collisionOffsetY = 0f
+        )
         {
-            this.Position = spawnPosition;
+            Position = spawnPosition;
 
-            this.Animations = new Dictionary<Vector2, IAnimation>();
+            Animations = new Dictionary<Vector2, IAnimation>();
 
-            this.EntityDirection = new Direction(SpriteEffects.None);
+            EntityDirection = new Direction(SpriteEffects.None);
+            
+            InputReader = inputReader;
 
-            this.InputReader = inputReader;
+            MoveCommand = new MoveCommand();
 
-            this.MoveCommand = new MoveCommand();
+            CollisionRectangle = collisionRectangle;
 
-            this.CollisionRectangle = collisionRectangle;
+            _collisionOffsetX = collisionOffsetX;
+            _collisionOffsetY = collisionOffsetY;
+
+            Health = 100;
         }
 
         public void Update(GameTime gameTime)
         {
             var direction = InputReader.ReadInput();
 
-            this.EntityDirection.Update(direction);
+            EntityDirection.Update(direction);
 
             Move(direction);
-
+            
             SelectedAnimation.Update(gameTime, EntityDirection);
 
             Rectangle collisionRectangle = CollisionRectangle;
 
-            collisionRectangle.X = (int) Position.X + collisionRectangle.Width / 2;
-            collisionRectangle.Y = (int) Position.Y;
+            collisionRectangle.X = (int) (Position.X + _collisionOffsetX);
+            collisionRectangle.Y = (int) (Position.Y + _collisionOffsetY);
 
             CollisionRectangle = collisionRectangle;
         }
@@ -139,7 +154,7 @@ namespace GameDevelopment.Entity.Abstracts
 
         public void Undo()
         {
-            this.MoveCommand.Undo(this);
+            MoveCommand.Undo(this);
         }
 
 
