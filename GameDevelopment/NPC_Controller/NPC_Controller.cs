@@ -2,11 +2,15 @@ using System;
 using System.Collections.Generic;
 using GameDevelopment.Animation.HeroAnimations;
 using GameDevelopment.Animation.Interfaces;
+using GameDevelopment.Collision;
+using GameDevelopment.Collision.Interfaces;
 using GameDevelopment.Entity;
 using GameDevelopment.Entity.Abstracts;
+using GameDevelopment.Entity.Interfaces;
 using GameDevelopment.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoGame.Extended.Tiled;
 
 namespace GameDevelopment.NPC_Controller
 {
@@ -18,56 +22,80 @@ namespace GameDevelopment.NPC_Controller
             List<Tuple<Vector2, Hostile_NPC>> entities
             )
         {
-            this._entities = entities;
+            _entities = entities;
         }
 
         public void Update(GameTime gameTime)
         {
             foreach (var NPC in _entities)
             {
-                Console.WriteLine("___________");
-                Console.WriteLine("Updating NPC...");
-                
                 Vector2 direction = new Vector2(NPC.Item1.X - NPC.Item2.Position.X, 0);
-                
-                Console.WriteLine("Waypoint: ");
-                Console.WriteLine(NPC.Item1);
-                
-                Console.WriteLine("Current position: ");
-                Console.WriteLine(NPC.Item2.Position);
-                
-                Console.WriteLine("Calculated direction: ");
-                Console.WriteLine(direction);
-                
+
                 IInputReader inputController = NPC.Item2.GetInputReader();
                 
                 if (Math.Abs(direction.X) > float.Epsilon)
                 {
-                    Console.WriteLine("Still have to move... ");
-
                     inputController.ReadInput(direction);
                 }
                 else
                 {
-                    Console.WriteLine("I'm done moving for now.");
                     inputController.ReadInput(new Vector2(0, 0));
-                    Console.WriteLine("+++++++++++");
                 }
 
                 NPC.Item2.Update(gameTime);
-                
-                Console.WriteLine("Updated NPC.");
-
-                Console.WriteLine("___________");
             }
         }
 
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
             foreach (var NPC in _entities)
             {
                 NPC.Item2.Draw(spriteBatch);
             } 
+        }
+        
+        public void ApplyGravity(CollisionManager collisionManager, TiledMapTileLayer collisionLayer)
+        {
+            foreach (var NPC in _entities)
+            {
+                if (collisionManager.CheckBottomCollision(NPC.Item2, collisionLayer))
+                {
+                    NPC.Item2.Gravity = new Vector2(0, 0);
+                }
+                else
+                {
+                    NPC.Item2.Gravity = new Vector2(
+                        0f,
+                        (NPC.Item2.Gravity.Y != 0f)
+                            ? NPC.Item2.Gravity.Y * GameSettings.Default.GravityVelocity
+                            : GameSettings.Default.GravityBase
+                    );
+                }
+            }
+        }
+        
+        public void CheckCollision(CollisionManager collisionManager, TiledMapTileLayer collisionLayer)
+        {
+            foreach (var NPC in _entities)
+            {
+                if (collisionManager.CheckCollision(NPC.Item2, collisionLayer))
+                {
+                    NPC.Item2.Undo();
+                }
+            }
+        }
+        
+        public bool CheckCollision(CollisionManager collisionManager, ICollision entity)
+        {
+            foreach (var NPC in _entities)
+            {
+                if (collisionManager.CheckCollision(NPC.Item2, entity))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }
