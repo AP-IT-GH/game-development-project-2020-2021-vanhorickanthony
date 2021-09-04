@@ -13,7 +13,7 @@ namespace GameDevelopment.Entity
     {
 
         public Hostile_NPC(Vector2 spawnPosition, IAnimationSheet idleSheet, IAnimationSheet walkSheet, IAnimationSheet runSheet, IAnimationSheet jumpSheet, IInputReader inputReader):
-            base(spawnPosition, inputReader, new Rectangle((int)spawnPosition.X, (int)spawnPosition.Y, 16, 40))
+            base(spawnPosition, inputReader, new Rectangle((int)spawnPosition.X, (int)spawnPosition.Y, 64, 40))
         {
             Animations.Add(new Vector2(0, 0), new IdleAnimation(idleSheet, this));
             Animations.Add(new Vector2(1, 0), new WalkAnimation(walkSheet, this));
@@ -25,7 +25,7 @@ namespace GameDevelopment.Entity
 
         public IInputReader GetInputReader()
         {
-            return this.InputReader;
+            return InputReader;
         }
     }
 }
