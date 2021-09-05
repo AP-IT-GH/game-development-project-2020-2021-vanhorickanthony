@@ -547,6 +547,24 @@
 /processorParam:TextureFormat=Color
 /build:assets/player/Player_walk.png
 
+#begin assets/sound_effects/ambient-cave.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:assets/sound_effects/ambient-cave.mp3
+
+#begin assets/sound_effects/ambient-forest.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:assets/sound_effects/ambient-forest.mp3
+
+#begin assets/sound_effects/you_died.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:assets/sound_effects/you_died.mp3
+
 #begin assets/sound_effects/you_died.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
@@ -582,25 +600,10 @@
 /processor:TiledMapProcessor
 /build:map/GameMap.tmx
 
-#begin map/GameMap.tmx
-/importer:TiledMapImporter
-/processor:TiledMapProcessor
-/build:map/GameMap.tmx
-
 #begin map/Level_1.tmx
 /importer:TiledMapImporter
 /processor:TiledMapProcessor
 /build:map/Level_1.tmx
-
-#begin map/Level_1.tmx
-/importer:TiledMapImporter
-/processor:TiledMapProcessor
-/build:map/Level_1.tmx
-
-#begin map/LevelOne.tmx
-/importer:TiledMapImporter
-/processor:TiledMapProcessor
-/build:map/LevelOne.tmx
 
 #begin map/LevelOne.tmx
 /importer:TiledMapImporter
@@ -616,16 +619,6 @@
 /importer:TiledMapImporter
 /processor:TiledMapProcessor
 /build:map/Platformer_Level_1.tmx
-
-#begin map/Platformer_Level_1.tmx
-/importer:TiledMapImporter
-/processor:TiledMapProcessor
-/build:map/Platformer_Level_1.tmx
-
-#begin map/Test.tmx
-/importer:TiledMapImporter
-/processor:TiledMapProcessor
-/build:map/Test.tmx
 
 #begin map/Test.tmx
 /importer:TiledMapImporter
