@@ -8,7 +8,7 @@ namespace GameDevelopment.GameState.Interfaces
 
 		public void InitializeGameObjects();
 
-		public void Update(GameTime gameTime);
+		public void Update(GameTime gameTime, Game mainGame);
 
 		public void Draw(GameTime gameTime);
 	}
