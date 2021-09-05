@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -40,8 +37,15 @@ namespace GameDevelopment.GameState
             _spawnPoint = new Vector2(200, 640);
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime, Game mainGame)
         {
+            if (_objectiveAchieved)
+            {
+                Handle(
+                    ContextHandler, 
+                    new LevelTwo(_camera2D, _collisionManager, _spriteBatch, _contentManager, _mapRenderer)
+                );
+            }
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 Handle(
@@ -50,7 +54,7 @@ namespace GameDevelopment.GameState
                 );
             }
             
-            base.Update(gameTime);
+            base.Update(gameTime, mainGame);
         }
 
         public override void LoadContent()
@@ -100,7 +104,7 @@ namespace GameDevelopment.GameState
 
             Hostile_NPC _enemy_wolf_1 = new Hostile_NPC(new Vector2(-30, 645), _wolfIdleSheet, _wolfWalkSheet, _wolfRunSheet, _wolfIdleSheet, new AIInputReader());
 
-            AddNpc(_enemy_wolf_1, new Vector2(660, 645));
+            AddNpc(_enemy_wolf_1, new Vector2(620, 645));
             
             foreach (var tiledMapLayer in _map.TileLayers)
             {
@@ -109,34 +113,11 @@ namespace GameDevelopment.GameState
             
             AddLethalMapLayer(_map.GetLayer<TiledMapTileLayer>("LavaLayer"));
             
-            _collisionLayer = _map.GetLayer<TiledMapTileLayer>("GroundLayer_1");
-
-            /*
-             * The main background - this is what we perform parallaxing on.
-             
-            _map.GetLayer<TiledMapGroupLayer>("SkyLayers").Layers.ForEach(
-                mapLayer =>
-                {
-                    AddMapLayer((TiledMapTileLayer) mapLayer);
-                }
-            );
+            AddLethalMapLayer(_map.GetLayer<TiledMapTileLayer>("GroundLayer_Lethal"));
             
-            /*
-             * Background decoration layers - these layers do not provide interaction, but are mere decoration for the settings.
-             
-            _map.GetLayer<TiledMapGroupLayer>("TreeLayers").Layers.ForEach(
-                mapLayer =>
-                {
-                    AddMapLayer((TiledMapTileLayer) mapLayer);
-                }
-            );
+            SetCollisionLayer(_map.GetLayer<TiledMapTileLayer>("GroundLayer_Collision"));
             
-            _collisionLayer = this._map.GetLayer<TiledMapTileLayer>("GroundLayer_1");
-            
-            AddMapLayer(this._map.GetLayer<TiledMapTileLayer>("GroundLayer_2"));
-            
-            AddMapLayer(this._map.GetLayer<TiledMapTileLayer>("GroundLayer_1"));
-            */
+            SetObjectiveLayer(_map.GetLayer<TiledMapTileLayer>("GroundLayer_Objective"));
             
             base.InitializeGameObjects();
         }
