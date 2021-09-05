@@ -12,6 +12,7 @@ using GameDevelopment.Animation.Interfaces;
 
 using GameDevelopment.GameState.Abstracts;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using MonoGame.Extended.Tiled;
 using MonoGame.Extended.Tiled.Renderers;
 
@@ -19,7 +20,8 @@ namespace GameDevelopment.GameState
 {
     public class LevelTwo: Level
     {
-        
+        private Song _ambientBackground;
+
         private IAnimationSheet _heroIdleSheet, _heroWalkSheet, _heroRunSheet, _heroJumpSheet;
 
         private Vector2 _spawnPoint;
@@ -57,7 +59,8 @@ namespace GameDevelopment.GameState
 
         public override void LoadContent()
         {
-            
+            _ambientBackground = _contentManager.Load<Song>("assets/sound_effects/ambient-cave");
+
             /*
             * Load hero sprites.
             */ 
@@ -78,6 +81,12 @@ namespace GameDevelopment.GameState
                 32, 40);
 
             base.LoadContent();
+            
+            MediaPlayer.Play(_ambientBackground);
+
+            MediaPlayer.IsRepeating = true;
+
+            MediaPlayer.Volume = 0.6f;
         }
         
         public override void InitializeGameObjects()
