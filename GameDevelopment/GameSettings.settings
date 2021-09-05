@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="GameDevelopment" GeneratedClassName="GameSettings">
+  <Profiles />
+  <Settings>
+    <Setting Name="GravityBase" Type="System.Single" Scope="Application">
+      <Value Profile="(Default)">1.05</Value>
+    </Setting>
+    <Setting Name="GravityVelocity" Type="System.Single" Scope="Application">
+      <Value Profile="(Default)">1.05</Value>
+    </Setting>
+    <Setting Name="GravityMax" Type="System.Single" Scope="Application">
+      <Value Profile="(Default)">1000</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
+
