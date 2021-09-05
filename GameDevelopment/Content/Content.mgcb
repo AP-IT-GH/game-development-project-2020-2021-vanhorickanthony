@@ -15,17 +15,33 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin assets/menu/button-back.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
+#begin assets/fonts/default.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/menu/button-back.png
+/processorParam:TextureFormat=Compressed
+/build:assets/fonts/default.spritefont
+
+#begin assets/fonts/default-lg.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:assets/fonts/default-lg.spritefont
+
+#begin assets/fonts/default-md.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:assets/fonts/default-md.spritefont
+
+#begin assets/fonts/default-sm.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:assets/fonts/default-sm.spritefont
 
 #begin assets/menu/button-back.png
 /importer:TextureImporter
@@ -63,18 +79,6 @@
 /processorParam:TextureFormat=Color
 /build:assets/menu/button-continue.png
 
-#begin assets/menu/button-continue.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/menu/button-continue.png
-
 #begin assets/menu/button-continue-selected.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -86,18 +90,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:assets/menu/button-continue-selected.png
-
-#begin assets/menu/button-controls.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/menu/button-controls.png
 
 #begin assets/menu/button-controls.png
 /importer:TextureImporter
@@ -135,18 +127,6 @@
 /processorParam:TextureFormat=Color
 /build:assets/menu/button-exit.png
 
-#begin assets/menu/button-exit.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/menu/button-exit.png
-
 #begin assets/menu/button-exit-selected.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -158,18 +138,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:assets/menu/button-exit-selected.png
-
-#begin assets/menu/button-load.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/menu/button-load.png
 
 #begin assets/menu/button-load.png
 /importer:TextureImporter
@@ -207,18 +175,6 @@
 /processorParam:TextureFormat=Color
 /build:assets/menu/button-menu.png
 
-#begin assets/menu/button-menu.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/menu/button-menu.png
-
 #begin assets/menu/button-menu-selected.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -230,18 +186,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:assets/menu/button-menu-selected.png
-
-#begin assets/menu/button-new_game.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/menu/button-new_game.png
 
 #begin assets/menu/button-new_game.png
 /importer:TextureImporter
@@ -279,18 +223,6 @@
 /processorParam:TextureFormat=Color
 /build:assets/menu/button-options.png
 
-#begin assets/menu/button-options.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/menu/button-options.png
-
 #begin assets/menu/button-options-selected.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -302,18 +234,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:assets/menu/button-options-selected.png
-
-#begin assets/menu/button-play.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/menu/button-play.png
 
 #begin assets/menu/button-play.png
 /importer:TextureImporter
@@ -351,18 +271,6 @@
 /processorParam:TextureFormat=Color
 /build:assets/menu/button-quit.png
 
-#begin assets/menu/button-quit.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/menu/button-quit.png
-
 #begin assets/menu/button-quit-selected.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -374,18 +282,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:assets/menu/button-quit-selected.png
-
-#begin assets/menu/button-resume.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/menu/button-resume.png
 
 #begin assets/menu/button-resume.png
 /importer:TextureImporter
@@ -423,18 +319,6 @@
 /processorParam:TextureFormat=Color
 /build:assets/menu/button-settings.png
 
-#begin assets/menu/button-settings.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/menu/button-settings.png
-
 #begin assets/menu/button-settings-selected.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -446,18 +330,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:assets/menu/button-settings-selected.png
-
-#begin assets/menu/button-start.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/menu/button-start.png
 
 #begin assets/menu/button-start.png
 /importer:TextureImporter
@@ -483,7 +355,7 @@
 /processorParam:TextureFormat=Color
 /build:assets/menu/button-start-selected.png
 
-#begin assets/npc/Wolf_01_Idle.png
+#begin assets/menu/image-you_died.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -493,7 +365,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:assets/npc/Wolf_01_Idle.png
+/build:assets/menu/image-you_died.png
 
 #begin assets/npc/Wolf_01_Idle.png
 /importer:TextureImporter
@@ -519,18 +391,6 @@
 /processorParam:TextureFormat=Color
 /build:assets/npc/Wolf_02_Move.png
 
-#begin assets/npc/Wolf_02_Move.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/npc/Wolf_02_Move.png
-
 #begin assets/npc/Wolf_03_Run-Start.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -542,30 +402,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:assets/npc/Wolf_03_Run-Start.png
-
-#begin assets/npc/Wolf_03_Run-Start.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/npc/Wolf_03_Run-Start.png
-
-#begin assets/npc/Wolf_04_Run-Loop.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/npc/Wolf_04_Run-Loop.png
 
 #begin assets/npc/Wolf_04_Run-Loop.png
 /importer:TextureImporter
@@ -591,18 +427,6 @@
 /processorParam:TextureFormat=Color
 /build:assets/npc/Wolf_05_Attack-Smearless.png
 
-#begin assets/npc/Wolf_05_Attack-Smearless.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/npc/Wolf_05_Attack-Smearless.png
-
 #begin assets/npc/Wolf_06_Attack-With-Smear.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -614,30 +438,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:assets/npc/Wolf_06_Attack-With-Smear.png
-
-#begin assets/npc/Wolf_06_Attack-With-Smear.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/npc/Wolf_06_Attack-With-Smear.png
-
-#begin assets/npc/Wolf_07_Damaged.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/npc/Wolf_07_Damaged.png
 
 #begin assets/npc/Wolf_07_Damaged.png
 /importer:TextureImporter
@@ -663,18 +463,6 @@
 /processorParam:TextureFormat=Color
 /build:assets/npc/Wolf_08_Damage-Recover.png
 
-#begin assets/npc/Wolf_08_Damage-Recover.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/npc/Wolf_08_Damage-Recover.png
-
 #begin assets/npc/Wolf_09_Death.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -686,30 +474,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:assets/npc/Wolf_09_Death.png
-
-#begin assets/npc/Wolf_09_Death.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/npc/Wolf_09_Death.png
-
-#begin assets/player/Player_climb.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/player/Player_climb.png
 
 #begin assets/player/Player_climb.png
 /importer:TextureImporter
@@ -735,18 +499,6 @@
 /processorParam:TextureFormat=Color
 /build:assets/player/Player_Idle.png
 
-#begin assets/player/Player_Idle.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/player/Player_Idle.png
-
 #begin assets/player/Player_jump.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -758,30 +510,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:assets/player/Player_jump.png
-
-#begin assets/player/Player_jump.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/player/Player_jump.png
-
-#begin assets/player/Player_NoAnimation.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/player/Player_NoAnimation.png
 
 #begin assets/player/Player_NoAnimation.png
 /importer:TextureImporter
@@ -807,18 +535,6 @@
 /processorParam:TextureFormat=Color
 /build:assets/player/Player_run.png
 
-#begin assets/player/Player_run.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/player/Player_run.png
-
 #begin assets/player/Player_walk.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -831,17 +547,11 @@
 /processorParam:TextureFormat=Color
 /build:assets/player/Player_walk.png
 
-#begin assets/player/Player_walk.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/player/Player_walk.png
+#begin assets/sound_effects/you_died.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:assets/sound_effects/you_died.mp3
 
 #begin assets/tiles/Background.png
 /importer:TextureImporter
@@ -854,30 +564,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:assets/tiles/Background.png
-
-#begin assets/tiles/Background.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/tiles/Background.png
-
-#begin assets/tiles/Tileset.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:assets/tiles/Tileset.png
 
 #begin assets/tiles/Tileset.png
 /importer:TextureImporter
@@ -896,6 +582,16 @@
 /processor:TiledMapProcessor
 /build:map/GameMap.tmx
 
+#begin map/GameMap.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:map/GameMap.tmx
+
+#begin map/Level_1.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:map/Level_1.tmx
+
 #begin map/Level_1.tmx
 /importer:TiledMapImporter
 /processor:TiledMapProcessor
@@ -906,10 +602,30 @@
 /processor:TiledMapProcessor
 /build:map/LevelOne.tmx
 
+#begin map/LevelOne.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:map/LevelOne.tmx
+
+#begin map/LevelTwo.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:map/LevelTwo.tmx
+
 #begin map/Platformer_Level_1.tmx
 /importer:TiledMapImporter
 /processor:TiledMapProcessor
 /build:map/Platformer_Level_1.tmx
+
+#begin map/Platformer_Level_1.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:map/Platformer_Level_1.tmx
+
+#begin map/Test.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:map/Test.tmx
 
 #begin map/Test.tmx
 /importer:TiledMapImporter
