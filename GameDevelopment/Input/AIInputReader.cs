@@ -27,26 +27,18 @@ namespace GameDevelopment.Input
         {
             if (direction.X > float.Epsilon)
             {
-                Console.WriteLine("Move right.");
-
                 direction = new Vector2(1, 0);
             }
             else if (direction.X < - float.Epsilon)
             {
-                Console.WriteLine("Move left.");
-
                 direction = new Vector2(-1, 0);
             }
             else
             {
-                Console.WriteLine("Stand still.");
-
                 direction = new Vector2(0, 0);
             }
 
             _currentInput = direction;
-
-            Console.WriteLine(_currentInput);
 
             return direction;
         }
