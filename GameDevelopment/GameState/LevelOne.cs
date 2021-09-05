@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 using GameDevelopment.Core;
 using GameDevelopment.Entity;
@@ -9,9 +11,8 @@ using GameDevelopment.Input;
 
 using GameDevelopment.Animation;
 using GameDevelopment.Animation.Interfaces;
-
 using GameDevelopment.GameState.Abstracts;
-using Microsoft.Xna.Framework.Input;
+
 using MonoGame.Extended.Tiled;
 using MonoGame.Extended.Tiled.Renderers;
 
@@ -19,6 +20,7 @@ namespace GameDevelopment.GameState
 {
     public class LevelOne: Level
     {
+        private Song _ambientBackground;
         
         private IAnimationSheet _heroIdleSheet, _heroWalkSheet, _heroRunSheet, _heroJumpSheet;
 
@@ -59,7 +61,8 @@ namespace GameDevelopment.GameState
 
         public override void LoadContent()
         {
-            
+            _ambientBackground = _contentManager.Load<Song>("assets/sound_effects/ambient-forest");
+
             /*
             * Load hero sprites.
             */ 
@@ -120,6 +123,12 @@ namespace GameDevelopment.GameState
             SetObjectiveLayer(_map.GetLayer<TiledMapTileLayer>("GroundLayer_Objective"));
             
             base.InitializeGameObjects();
+            
+            MediaPlayer.Play(_ambientBackground);
+
+            MediaPlayer.IsRepeating = true;
+
+            MediaPlayer.Volume = 0.6f;
         }
     }
 }
