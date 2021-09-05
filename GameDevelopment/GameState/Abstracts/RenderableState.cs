@@ -9,7 +9,7 @@ namespace GameDevelopment.GameState.Abstracts
 		
 		public abstract void LoadContent();
 		public abstract void InitializeGameObjects();
-		public abstract void Update(GameTime gameTime);
+		public abstract void Update(GameTime gameTime, Game mainGame);
 		public abstract void Draw(GameTime gameTime);
 		public abstract void Handle(ContextHandler ctx, RenderableState nextState);
 	}
