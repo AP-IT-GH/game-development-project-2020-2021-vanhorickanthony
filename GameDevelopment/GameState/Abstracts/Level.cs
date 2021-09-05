@@ -4,13 +4,12 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 using GameDevelopment.Core;
 using GameDevelopment.Entity;
 using GameDevelopment.Collision;
-
 using GameDevelopment.GameState.Interfaces;
+
 using MonoGame.Extended.Content;
 using MonoGame.Extended.Tiled;
 using MonoGame.Extended.Tiled.Renderers;
@@ -48,6 +47,9 @@ namespace GameDevelopment.GameState.Abstracts
         protected List<TiledMapTileLayer> _mapLayers;
         protected List<TiledMapTileLayer> _lethalLayers;
         protected TiledMapTileLayer _collisionLayer;
+        protected TiledMapTileLayer _objectiveLayer;
+
+        protected bool _objectiveAchieved;
 
         public Level(
             Camera2D camera2D,
@@ -72,6 +74,8 @@ namespace GameDevelopment.GameState.Abstracts
 
             _mapLayers = new List<TiledMapTileLayer>();
             _lethalLayers = new List<TiledMapTileLayer>();
+
+            _objectiveAchieved = false;
         }
 
         public void AddMapLayer(TiledMapTileLayer mapLayer)
@@ -82,6 +86,16 @@ namespace GameDevelopment.GameState.Abstracts
         public void AddLethalMapLayer(TiledMapTileLayer mapLayer)
         {
             _lethalLayers.Add(mapLayer);
+        }
+        
+        public void SetCollisionLayer(TiledMapTileLayer mapLayer)
+        {
+            _collisionLayer = mapLayer;
+        }
+
+        public void SetObjectiveLayer(TiledMapTileLayer mapLayer)
+        {
+            _objectiveLayer = mapLayer;
         }
 
         public void AddNpc(Hostile_NPC npc, Vector2 destination)
@@ -109,9 +123,14 @@ namespace GameDevelopment.GameState.Abstracts
             
             _camera2D.HorizontalBounds = new Vector2(0, _map.WidthInPixels);
             _camera2D.VerticalBounds = new Vector2(0, _map.HeightInPixels);
+            
+            foreach (var tiledMapTileset in _map.Tilesets)
+            {
+                Console.WriteLine(tiledMapTileset.Name);
+            }
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime, Game mainGame)
         {
             foreach (var lethalLayer in _lethalLayers)
             {
@@ -119,6 +138,11 @@ namespace GameDevelopment.GameState.Abstracts
                 {
                     _player.Health = 0;
                 }
+            }
+            
+            if (_collisionManager.CheckCollision(_player, _objectiveLayer))
+            {
+                _objectiveAchieved = true;
             }
 
             if (_npcController.CheckCollision(_collisionManager, _player))
@@ -138,7 +162,7 @@ namespace GameDevelopment.GameState.Abstracts
             {
                 Handle(
                     ContextHandler, 
-                    new DeathMenu(_camera2D, _collisionManager, _spriteBatch, _contentManager, _mapRenderer)
+                    new DeathMenu(_camera2D, _collisionManager, _spriteBatch, _contentManager, _mapRenderer, this)
                 );
             }
         }
@@ -184,7 +208,8 @@ namespace GameDevelopment.GameState.Abstracts
 
         public override void Handle(ContextHandler ctx, RenderableState nextState)
         {
-            Console.WriteLine("Resetting level.");
+            Console.WriteLine("[Level] Handle next state.");
+            Console.WriteLine("[Level][Context] " + _mapName);
             
             _contentManager.Unload();
             
@@ -193,15 +218,14 @@ namespace GameDevelopment.GameState.Abstracts
             ctx.State = nextState;
             
             ctx.State.ContextHandler = ctx;
-
-
-            Console.WriteLine("Load content...");
+            
+            Console.WriteLine("[Level] Start loading content.");
             ctx.State.LoadContent();
 
-            Console.WriteLine("Init game objects...");
+            Console.WriteLine("[Level] Initialize game objects.");
             ctx.State.InitializeGameObjects();
 
-            Console.WriteLine("Done!");
+            Console.WriteLine("[Level] Finished. Goodbye.");
         }
     }
 }
