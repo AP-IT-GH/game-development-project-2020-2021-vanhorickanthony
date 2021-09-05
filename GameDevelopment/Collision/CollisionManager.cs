@@ -61,7 +61,7 @@ namespace GameDevelopment.Collision
         public bool CheckBottomCollision(ICollision collider, TiledMapTileLayer collisionLayer)
         {
             for (int x = collider.CollisionRectangle.X; x < collider.CollisionRectangle.X + collider.CollisionRectangle.Width; x++)
-            { 
+            {
                 if (collisionLayer.TryGetTile(
                         (ushort)(x / collisionLayer.TileWidth),
                         (ushort)( (collider.CollisionRectangle.Y + collider.CollisionRectangle.Height) / collisionLayer.TileHeight),
