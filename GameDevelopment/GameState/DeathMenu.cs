@@ -1,13 +1,15 @@
 using System;
 
-using GameDevelopment.Core;
-using GameDevelopment.GameState.Interfaces;
-using GameDevelopment.Collision;
-using GameDevelopment.GameState.Abstracts;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
+
+using GameDevelopment.Core;
+using GameDevelopment.Collision;
+using GameDevelopment.GameState.Abstracts;
+
 using MonoGame.Extended.Content;
 using MonoGame.Extended.Tiled.Renderers;
 
@@ -32,22 +34,28 @@ namespace GameDevelopment.GameState
         private double previousTime;
         private double debounce;
 
+        private Song _soundEffect;
+
+        private Texture2D _imageYouDied;
+        private double _imageFadeInTime;
+        private double _imageTimerStart;
+        private float _timerCompletion;
+
         private Texture2D _buttonPlay;
         private Texture2D _buttonPlaySelected;
 
         private Texture2D _buttonQuit;
         private Texture2D _buttonQuitSelected;
+
+        private Level _currentLevel;
         
-
-        private Vector2 _mouseLocation;
-
-
         public DeathMenu(
             Camera2D camera2D,
             CollisionManager collisionManager,
             SpriteBatch spriteBatch,
             ContentManager contentManager,
-            TiledMapRenderer mapRenderer
+            TiledMapRenderer mapRenderer,
+            Level currentLevel
         )
         {
             _camera2D = camera2D;
@@ -60,14 +68,24 @@ namespace GameDevelopment.GameState
 
             _mapRenderer = mapRenderer;
 
-            selectedAction = 0;
+            selectedAction = -1;
+
+            _imageFadeInTime = 5000;
+            _imageTimerStart = 0;
+            _timerCompletion = 0;
 
             previousTime = 0;
             debounce = 400;
+
+            _currentLevel = currentLevel;
         }
 
         public override void LoadContent()
         {
+            _soundEffect = _contentManager.Load<Song>("assets/sound_effects/you_died");
+            
+            _imageYouDied = _contentManager.Load<Texture2D>("assets/menu/image-you_died");
+            
             _buttonPlay = _contentManager.Load<Texture2D>("assets/menu/button-play");
             _buttonPlaySelected = _contentManager.Load<Texture2D>("assets/menu/button-play-selected");
 
@@ -82,12 +100,20 @@ namespace GameDevelopment.GameState
             Console.WriteLine("Loading menu objects...");
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime, Game mainGame)
         {
-            Console.WriteLine("1: " + gameTime.TotalGameTime.TotalMilliseconds);
-            Console.WriteLine("2: " + previousTime);
+            _timerCompletion =
+                (Single) ((float) Math.Min(gameTime.TotalGameTime.TotalMilliseconds - _imageTimerStart, _imageFadeInTime) /
+                          _imageFadeInTime);
             
-            if ((gameTime.TotalGameTime.TotalMilliseconds - previousTime) > debounce)
+            if (_imageTimerStart == 0)
+            {
+                _imageTimerStart = gameTime.TotalGameTime.TotalMilliseconds;
+                
+                MediaPlayer.Play(_soundEffect);
+            }
+            
+            if ((gameTime.TotalGameTime.TotalMilliseconds - previousTime) > debounce && _timerCompletion >= 0.9)
             {
                 if (Keyboard.GetState().IsKeyDown(Keys.Left))
                 {
@@ -112,12 +138,13 @@ namespace GameDevelopment.GameState
                     if (selectedAction == 0)
                     {
                         Handle(
-                            ContextHandler, 
-                            new LevelOne(_camera2D, _collisionManager, _spriteBatch, _contentManager, _mapRenderer)
+                            ContextHandler,
+                            (RenderableState)Activator.CreateInstance(_currentLevel.GetType(), _camera2D, _collisionManager, _spriteBatch, _contentManager, _mapRenderer)
                         );
                     }
                     else if (selectedAction == 1)
                     {
+                        Console.WriteLine("Main menu");
                         Handle(
                             ContextHandler, 
                             new MainMenu(_camera2D, _collisionManager, _spriteBatch, _contentManager, _mapRenderer)
@@ -130,33 +157,46 @@ namespace GameDevelopment.GameState
         public override void Draw(GameTime gameTime)
         {
             _spriteBatch.Begin();
-            
+
             _spriteBatch.Draw(
-                selectedAction == 0 ? _buttonPlaySelected : _buttonPlay, 
+                _imageYouDied,
                 new Rectangle(
-                    (_spriteBatch.GraphicsDevice.Viewport.Width / 2) - 350,
-                    (_spriteBatch.GraphicsDevice.Viewport.Height / 2) - 50,
-                    300, 
-                    100
+                    (_spriteBatch.GraphicsDevice.Viewport.Width / 2) - (640/2),
+                    0,
+                    640, 
+                    360
+                ),
+                Color.White * _timerCompletion);
+
+            if (_timerCompletion >= 0.9)
+            {
+                _spriteBatch.Draw(
+                    selectedAction == 0 ? _buttonPlaySelected : _buttonPlay,
+                    new Rectangle(
+                        50,
+                        _spriteBatch.GraphicsDevice.Viewport.Height - 150,
+                        300, 
+                        100
                     ),
-                Color.White);
+                    Color.White);
             
-            _spriteBatch.Draw(
-                selectedAction == 1 ? _buttonQuitSelected : _buttonQuit,
-                new Rectangle(
-                    (_spriteBatch.GraphicsDevice.Viewport.Width / 2),
-                    (_spriteBatch.GraphicsDevice.Viewport.Height / 2) - 50,
-                    300, 
-                    100
+                _spriteBatch.Draw(
+                    selectedAction == 1 ? _buttonQuitSelected : _buttonQuit,
+                    new Rectangle(
+                        _spriteBatch.GraphicsDevice.Viewport.Width - 350,
+                        _spriteBatch.GraphicsDevice.Viewport.Height - 150,
+                        300, 
+                        100
                     ),
-                Color.White);
-            
+                    Color.White);
+            }
+
             _spriteBatch.End();
         }
         
         public override void Handle(ContextHandler ctx, RenderableState nextState)
         {
-            Console.WriteLine("Resetting level.");
+            Console.WriteLine("[DeathMenu] Handle next state.");
             
             _contentManager.Unload();
             
@@ -165,15 +205,14 @@ namespace GameDevelopment.GameState
             ctx.State = nextState;
             
             ctx.State.ContextHandler = ctx;
-
-
-            Console.WriteLine("Load content...");
+            
+            Console.WriteLine("[DeathMenu] Start loading content.");
             ctx.State.LoadContent();
 
-            Console.WriteLine("Init game objects...");
+            Console.WriteLine("[DeathMenu] Initialize game objects.");
             ctx.State.InitializeGameObjects();
 
-            Console.WriteLine("Done!");
+            Console.WriteLine("[DeathMenu] Finished. Goodbye.");
         }
     }
 }
