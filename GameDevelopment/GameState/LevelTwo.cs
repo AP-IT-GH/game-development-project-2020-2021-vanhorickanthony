@@ -41,7 +41,7 @@ namespace GameDevelopment.GameState
             {
                 Handle(
                     ContextHandler, 
-                    new MainMenu(_camera2D, _collisionManager, _spriteBatch, _contentManager, _mapRenderer)
+                    new EndMenu(_camera2D, _collisionManager, _spriteBatch, _contentManager, _mapRenderer)
                 );
             }
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
